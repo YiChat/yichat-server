@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.User">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="nick" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="area_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="salt" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="token" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="avatar" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="platform" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="appId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="gender" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="ucode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="recommend_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="recommend_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="timestamp" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="login_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="create_group_auth" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="qrcode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="BaseResultMapStg" type="com.zf.yichat.dto.UserStg">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="nick" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="area_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="mobile" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="salt" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="token" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="avatar" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="platform" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="appId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="gender" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="ucode" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+
+
+</mapper>

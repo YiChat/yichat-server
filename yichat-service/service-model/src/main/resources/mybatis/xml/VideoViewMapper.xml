@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.VideoViewMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.VideoView">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="video_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <update id="saveOrUpdate">
+        INSERT into video_view(video_id,user_id)VALUES (#{videoId},#{userId})
+        ON DUPLICATE KEY UPDATE count=count+1
+    </update>
+</mapper>

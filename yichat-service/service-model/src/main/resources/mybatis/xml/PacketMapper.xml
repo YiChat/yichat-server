@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.PacketMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.Packet">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="num" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="user_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="over_status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="money" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="group_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <select id="selectSendCount" resultType="com.zf.yichat.dto.PacketSendInfoDto">
+        SELECT count(1) as count,sum(money) as money FROM packet where user_id=#{userId}
+        <if test="type!=null">
+            and type=#{type}
+        </if>
+    </select>
+    <select id="selectReceiveCount" resultType="com.zf.yichat.dto.PacketReceiveInfoDto">
+        select count(1) as count,sum(pr.money) as money from packet_receive pr LEFT JOIN packet p ON pr.packet_id=p.id
+        where
+        pr.status=1 AND pr.user_id=#{userId}
+        <if test="type!=null">
+            and p.type=#{type}
+        </if>
+    </select>
+    <select id="selectSendList" resultType="com.zf.yichat.dto.PacketSendListDto">
+        SELECT
+        p.id as packetId,
+        p.user_id as userId,
+        if(p.over_status=1,2,p.status) as status,
+        p.num as totalCount,
+        ifnull(pc.count,0) as receiveCount,
+        u.nick,
+        u.avatar,
+        p.money,
+        DATE_FORMAT(p.ctime,'%m-%d %H:%i:%s')as receiveTime,
+        p.type
+        from packet p LEFT JOIN `user` u on p.user_id=u.id
+        LEFT JOIN (SELECT packet_id,count(1) as count from packet_receive where `status`=1 GROUP BY packet_id ) pc
+        on pc.packet_id=p.id
+        where p.user_id=#{userId}
+        <if test="type!=null">
+            and p.type=#{type}
+        </if>
+        order by p.id desc
+    </select>
+    <select id="selectReceiveList" resultType="com.zf.yichat.dto.PacketReceiveListDto">
+        select
+        p.id as packetId,
+        p.user_id as userId,
+        u.nick,
+        u.avatar,
+        pr.money,
+        DATE_FORMAT(pr.ctime,'%m-%d %H:%i:%s')as receiveTime,
+        p.type
+        from packet_receive pr LEFT JOIN packet p ON pr.packet_id=p.id
+        LEFT JOIN `user` u on p.user_id=u.id
+        where
+        pr.status=1 AND pr.user_id=#{userId}
+        <if test="type!=null">
+            and p.type=#{type}
+        </if>
+        order by pr.id desc
+    </select>
+
+    <select id="countUserReceiveLuck" resultType="java.lang.Long">
+        SELECT count(1) from (
+        SELECT MAX(pc.money) as money,pc.packet_id from packet_receive pc LEFT JOIN packet p ON pc.packet_id=p.id where
+        pc.`status`=1 and p.type=1 AND (p.`status`=2 or p.`status`=3) GROUP BY pc.packet_id
+
+        ) a LEFT JOIN packet_receive p ON p.money=a.money and p.packet_id=p.packet_id
+
+        where p.user_id =#{userId}
+
+    </select>
+</mapper>

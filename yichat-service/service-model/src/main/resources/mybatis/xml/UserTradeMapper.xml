@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.UserTradeMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.UserTrade">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="trade_no" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="pay_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="money" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="memo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+</mapper>

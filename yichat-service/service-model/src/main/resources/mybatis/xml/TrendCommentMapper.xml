@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zf.yichat.mapper.TrendCommentMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.TrendComment">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="trend_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="comment_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="src_user_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="ctime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="utime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+
+    <select id="selectList" resultType="com.zf.yichat.dto.TrendCommentListDto">
+        SELECT DISTINCT t.id as commentId,t.content,u1.id as srcUserId,u1.nick as srcNick,t.user_id as userId,
+        u.nick,t.trend_id as trendId,t.ctime,DATE_FORMAT(t.ctime,'%Y年%m月%d日 %H:%s') as timeDesc
+        from trend_comment t
+        LEFT JOIN user u on t.user_id=u.id
+        LEFT JOIN user u1 on t.src_user_id=u1.id
+        LEFT JOIN friend f on u.id=f.user_id
+        WHERE ((f.friend_id = #{userId} and f.status=0) or t.user_id= #{userId}) AND t.trend_id=#{trendId} and
+        t.status=0
+
+        UNION all
+        SELECT DISTINCT t.id as commentId,t.content,u1.id as srcUserId,u1.nick as srcNick,t.user_id as userId,
+        u.nick,t.trend_id as trendId,t.ctime,DATE_FORMAT(t.ctime,'%Y年%m月%d日 %H:%s') as timeDesc from trend_comment t
+        LEFT JOIN user u on t.user_id=u.id
+        LEFT JOIN user u1 on t.src_user_id=u1.id
+        LEFT JOIN friend f on u.id=f.friend_id
+        WHERE f.`status`= 0 and f.user_id = #{userId} AND t.trend_id=#{trendId} and t.status=0
+
+        ORDER BY ctime ASC
+
+    </select>
+</mapper>

@@ -1,0 +1,119 @@
+spring:
+   profiles:
+     active: dev
+
+# mybatis配置
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath*:mybatis/**/*Mapper.xml
+  type-aliases-package: com.zf.yichat.model
+
+---
+ #dev
+spring:
+   profiles: dev
+
+
+---
+ #prod
+spring:
+   profiles: prod
+
+
+---
+ #prod
+spring:
+   profiles: tw
+
+
+---
+ #prod
+spring:
+   profiles: wanwei
+
+---
+ #yichat
+spring:
+   profiles: yichat
+
+---
+ #黑金
+spring:
+   profiles: huliao
+
+
+---
+ #易聊
+spring:
+   profiles: yiliao
+
+---
+ #缘聊
+spring:
+   profiles: yuanliao
+
+---
+ #趣聊
+spring:
+   profiles: 趣聊
+
+---
+ #彩聊
+spring:
+   profiles: 彩聊
+
+---
+spring:
+   profiles: 微聊
+
+---
+spring:
+   profiles: 乐聊
+
+---
+ #清聊
+spring:
+   profiles: 清聊
+
+---
+spring:
+   profiles: 掌上聊
+
+---
+spring:
+   profiles: 陌菲
+
+
+---
+spring:
+   profiles: 滴聊
+
+---
+spring:
+   profiles: 滴聊prod
+
+---
+spring:
+   profiles: 微聊2
+
+---
+spring:
+   profiles: 神笔
+
+---
+spring:
+   profiles: 缘聊
+
+---
+spring:
+   profiles: 众聊
+
+
+---
+spring:
+   profiles: SX
+
+
+---
+spring:
+   profiles: 声控

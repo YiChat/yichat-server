@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zf.yichat.mapper.MessageStoreMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.MessageStore">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="refer_type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="refer_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="time" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="message_id" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="ctime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="text" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+</mapper>

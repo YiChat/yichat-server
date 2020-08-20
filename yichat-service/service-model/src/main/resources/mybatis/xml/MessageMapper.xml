@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.MessageMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.Message">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="refer_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="refer_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="time" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="message_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+            <arg column="text" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="BaseResultMapStg" type="com.zf.yichat.dto.MessageStg">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="refer_type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="refer_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="time" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="message_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+            <arg column="text" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+            <arg column="count" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        </constructor>
+    </resultMap>
+
+    <select id="selectLastListByGroup" resultMap="BaseResultMap">
+        select * from message
+        WHERE refer_id=#{groupId} and time <![CDATA[>]]> #{time}
+        order by time DESC limit 0,#{limit}
+    </select>
+    <select id="countGroupUnreadCount" resultMap="BaseResultMapStg">
+
+        SELECT *,count(1) from message where refer_id =#{groupId} and time > #{time} ORDER BY time DESC
+    </select>
+
+    <select id="selectHistoryListByGroup" resultMap="BaseResultMap">
+        select * from message
+        WHERE refer_id=#{groupId} and time <![CDATA[>]]> #{addTime} and refer_type=2 and status=0
+        <if test="time!=null">
+            and time <![CDATA[<]]> #{time}
+        </if>
+        order by id DESC limit 0,#{limit}
+    </select>
+
+    <select id="selectHistoryListByUser" resultMap="BaseResultMap">
+        select * from message
+        WHERE ((refer_id=#{referId} and user_id=#{userId}) or (refer_id=#{userId} and user_id=#{referId}) ) and
+        refer_type=1
+        and status=0
+        and time <![CDATA[>]]> #{addTime}
+        <if test="time!=null">
+            and time <![CDATA[<]]> #{time}
+        </if>
+        order by time DESC limit 0,#{limit}
+    </select>
+
+</mapper>

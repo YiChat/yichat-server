@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.VideoMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.Video">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="thumbnail" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="rate" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="seconds" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="praise_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="comment_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="view_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="check_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="balance_status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="balance_money" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <update id="incrementCommentCount">
+        update video set comment_count=comment_count+1 where id=#{videoId}
+    </update>
+    <update id="reduceCommentCount">
+        update video set comment_count=comment_count-#{count} where id=#{videoId} and comment_count-#{count}&gt;0
+    </update>
+    <update id="incrementPraiseCount">
+        update video set praise_count=praise_count+1 where id=#{videoId}
+    </update>
+    <update id="reducePraiseCount">
+        update video set praise_count=praise_count-1 where id=#{videoId} and praise_count-1 &gt; 0
+    </update>
+    <update id="incrementViewCount">
+        update video set view_count=view_count+1 where id=#{videoId}
+    </update>
+
+    <select id="list" resultMap="BaseResultMap">
+
+        SELECT v.* from video v LEFT JOIN (SELECT * from video_view where user_id=#{userId}) vv on v.id=vv.video_id
+        where v.`status`=1
+        <choose>
+            <when test="type == 1">
+                order by IFNULL(vv.count,-1) asc,v.id desc
+            </when>
+            <when test="type == 2">
+                order by IFNULL(vv.count,-1) asc, v.praise_count desc
+            </when>
+            <when test="type == 3">
+                and v.user_id in (
+
+                SELECT a.friend_id from friend a
+                where a.user_id=#{userId} and a.`status`=0
+                UNION ALL
+                SELECT a.user_id from friend a
+                where a.friend_id=#{userId} and a.`status`=0
+
+                )
+                order by IFNULL(vv.count,-1) asc, v.id desc
+            </when>
+            <otherwise>
+                ORDER BY IFNULL(vv.count,-1) asc
+            </otherwise>
+        </choose>
+        limit 10
+
+    </select>
+    <select id="selectCreateList" resultMap="BaseResultMap">
+        select v.* from video v WHERE v.user_id=#{userId} and v.status&gt;-1
+        order by id desc
+    </select>
+    <select id="selectFriendList" resultMap="BaseResultMap">
+        select v.* from video v LEFT JOIN friend a ON v.user_id=a.user_id WHERE a.user_id=#{userId} and a.`status`=0 and
+        v.status=1
+        union all
+        select v.* from video v LEFT JOIN friend a ON v.user_id=a.friend_id WHERE a.friend_id=#{userId} and a.`status`=0
+        and v.status=1
+
+
+    </select>
+    <select id="selectPraiseList" resultMap="BaseResultMap">
+        select v.* from video v LEFT JOIN video_praise vp ON v.id=vp.video_id WHERE v.status=1 and vp.user_id=#{userId}
+        order by id desc
+    </select>
+</mapper>

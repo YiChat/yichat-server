@@ -1,0 +1,15 @@
+spring:
+   profiles:
+     active: dev
+
+# mybatis配置
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath*:mybatis/**/*Mapper.xml
+  type-aliases-package: com.zf.yichat.model
+
+---
+ #yichat
+spring:
+   profiles: yichat
+

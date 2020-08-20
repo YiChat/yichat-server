@@ -1,0 +1,112 @@
+
+server:
+  port: 8015
+  servlet:
+    context-path: /api
+  tomcat:
+      ## 最大工作线程数，默认200。（4核8g内存，线程数经验值800，操作系统做线程之间的切换调度是有系统开销的，所以不是越多越好。）
+      max-threads: 800
+      ## 最小工作空闲线程数，默认10。（适当增大一些，以便应对突然增长的访问量）
+      min-spare-threads: 100
+      ## 等待队列长度，默认100。
+      accept-count: 1000
+      ## 最大连接数
+      max-connections: 20000
+
+
+##############
+config:
+  #财务金额单位
+  unit: 元
+  #用户默认建群权限 0无 1有
+  createGroupAuth: 1
+  #手机号是否默认应用ID
+  mobileAppIdStatus: false
+  #是否支持应用ID登陆
+  supportAppIdLogin: true
+  security:
+     aesKey:
+       #参数及返回加密 app加密保持一致
+       auth: A286D372SM63HFUQW
+       #token加密
+       token: A28SW372M63HFYUS
+      #参数是否需要解密
+     decode: true
+  #推送是否启用
+  push:
+     status: false
+  #短信平台
+  sms:
+     # 云片
+     client:
+     #
+     appKey:
+  #红包有效小时数
+  packet:
+     effectHour: 12
+
+#数据库配置
+spring:
+  datasource:
+    jdbc-url: jdbc:mysql://localhost:3306/api?useUnicode=true&characterEncoding=utf-8&useSSL=false&noAccessToProcedureBodies=true&allowMultiQueries=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: tigase
+    password: aa12345
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 25
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 180000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+    im:
+          jdbc-url: jdbc:mysql://localhost:3306/tigase?useSSL=false&noAccessToProcedureBodies=true
+          driver-class-name: com.mysql.jdbc.Driver
+          username: tigase
+          password: aa12345
+          type: com.zaxxer.hikari.HikariDataSource
+          hikari:
+                 minimum-idle: 1
+                 maximum-pool-size: 15
+                 auto-commit: true
+                 idle-timeout: 30000
+                 pool-name: DatebookHikariCP
+                 max-lifetime: 180000
+                 connection-timeout: 30000
+                 connection-test-query: SELECT 1
+  redis:
+        database: 1
+        host: localhost
+        port: 6379
+        password: zf123!@#
+        jedis:
+          pool:
+            max-active: 9
+            max-wait: -1
+            max-idle: 5
+            min-idle: 0
+        timeout: 10000
+
+#支付配置
+pay:
+  weixin:
+     #应用ID
+     appId:
+     #
+     appKey:
+     #商户号
+     mchId:
+     #回调地址
+     notifyUrl:
+  alipay:
+     #应用ID
+     appId:
+     #商户私钥
+     privateKey:
+     #支付宝公钥
+     publicKey:
+     #回调地址
+     notifyUrl:

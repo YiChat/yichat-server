@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.im.mapper.TigGroupMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.TigGroup">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="gid" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="creator" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="descri" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="imgurl" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="creation_date" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="version" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="LONGVARCHAR"/>
+        </constructor>
+    </resultMap>
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT tg.* from tig_group_members tm LEFT JOIN tig_groups tg on tm.gid=tg.gid
+        where tm.uid=#{userId}
+    </select>
+</mapper>

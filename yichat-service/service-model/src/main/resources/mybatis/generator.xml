@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="mybatis/generator.properties"/>
+
+    <!-- 指定数据连接驱动jar地址 -->
+    <!--<classPathEntry location="${classPath}" />-->
+
+    <!-- 一个数据库一个context -->
+    <context id="fenku" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!-- 根据Mapper生成实体类,xml文件 -->
+        <!--<plugin type="OverIsMergeablePlugin" />-->
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.zf.yichat.base.FsMapper"/>
+        </plugin>
+
+
+        <!-- <plugin type="${mapper.plugin}">
+             <property name="autoDelimitKeywords" value="true"/> &lt;!&ndash; 给表名或字段名添加分隔符。&ndash;&gt;
+
+             <property name="mappers" value="${mapper.Mapper}"/>
+         </plugin>-->
+
+        <!-- 注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
+            <property name="suppressDate" value="true"/> <!-- 是否生成注释代时间戳-->
+        </commentGenerator>
+
+
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="${jdbc_driver}"
+                        connectionURL="${jdbc_url}" userId="${jdbc_user}"
+                        password="${jdbc_password}"/>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="com.zf.yichat.model"
+                            targetProject="${project}">
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+            <property name="enableSubPackages" value="false"/>
+
+            <property name="constructorBased" value="true"/>
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成mapxml文件 -->
+        <sqlMapGenerator targetPackage="mybatis/xml"
+                         targetProject="${xml}">
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 生成mapxml对应client，也就是接口dao -->
+        <javaClientGenerator targetPackage="com.zf.yichat.mapper"
+                             targetProject="${project}" type="XMLMAPPER">
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+        <!--<table tableName="user" domainObjectName="User">-->
+        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <!--<table tableName="mobile_captcha" domainObjectName="MobileCaptcha" />-->
+        <!--<table tableName="user_device" domainObjectName="UserDevice" />-->
+        <!--<table tableName="user_im" domainObjectName="UserIm" />-->
+
+        <!--<table tableName="friend" domainObjectName="Friend" />-->
+        <!--<table tableName="friend_apply" domainObjectName="FriendApply" />-->
+        <!--<table tableName="third_login" domainObjectName="ThirdLogin" />-->
+
+        <!--<table tableName="trend" domainObjectName="Trend"/>-->
+        <!--<table tableName="trend_comment" domainObjectName="TrendComment"/>-->
+        <!--<table tableName="trend_praise" domainObjectName="TrendPraise"/>-->
+
+
+        <!--<table tableName="user_balance" domainObjectName="UserBalance"/>-->
+        <!--<table tableName="user_balance_detail" domainObjectName="UserBalanceDetail"/>-->
+        <!--<table tableName="packet" domainObjectName="Packet"/>-->
+        <!--<table tableName="packet_receive" domainObjectName="PacketReceive"/>-->
+
+        <!--<table tableName="message" domainObjectName="Message"/>-->
+        <!--<table tableName="sms" domainObjectName="Sms"/>-->
+        <!--<table tableName="group_user" domainObjectName="GroupUser"/>-->
+
+        <!--<table tableName="sys_user" domainObjectName="SysUser"/>
+        <table tableName="sys_user_role" domainObjectName="SysUserRole"/>
+        <table tableName="sys_role_menu_relation" domainObjectName="SysRoleMenuRelation"/>
+        <table tableName="sys_menu" domainObjectName="SysMenu"/>
+        <table tableName="sys_dict" domainObjectName="SysDict"/>
+        <table tableName="sys_dict_data" domainObjectName="SysDictData-->
+
+        <!--<table tableName="app_version" domainObjectName="AppVersion"/>-->
+        <!--<table tableName="group_admin" domainObjectName="GroupAdmin"/>
+        -->
+
+        <!--<table tableName="group_silent" domainObjectName="GroupSilent"/>-->
+
+        <!--<table tableName="user_bank" domainObjectName="UserBank"/>-->
+        <!--<table tableName="user_withdraw" domainObjectName="UserWithdraw"/>-->
+
+        <!--<table tableName="app_config" domainObjectName="AppConfig" />-->
+        <!--<table tableName="user_sign" domainObjectName="UserSign" />-->
+        <!--<table tableName="user_feedback" domainObjectName="UserFeedback" />-->
+        <!--<table tableName="trend_config" domainObjectName="TrendConfig" />-->
+        <!--<table tableName="user_trade" domainObjectName="UserTrade" />-->
+        <!--<table tableName="app_notice" domainObjectName="AppNotice" />-->
+        <!--<table tableName="app_small" domainObjectName="AppSmall" />-->
+
+        <!--<table tableName="user_ip" domainObjectName="UserIp" />-->
+        <!--<table tableName="message_store" domainObjectName="MessageStore" />-->
+
+        <!--<table tableName="app_robot" domainObjectName="AppRobot" />-->
+        <!--<table tableName="message_del_time" domainObjectName="MessageDelTime" />-->
+        <!--<table tableName="app_robot_code" domainObjectName="AppRobotCode" />-->
+        <!--<table tableName="app_robot_record" domainObjectName="AppRobotRecord" />-->
+        <!--<table tableName="video" domainObjectName="Video" />-->
+        <!--<table tableName="video_praise" domainObjectName="VideoPraise" />-->
+        <!--<table tableName="video_comment" domainObjectName="VideoComment" />-->
+        <!--<table tableName="video_comment_praise" domainObjectName="VideoCommentPraise" />-->
+        <!--<table tableName="video_view" domainObjectName="VideoView" />-->
+        <!--<table tableName="video_play_record" domainObjectName="VideoPlayRecord" />-->
+        <!--<table tableName="user_online" domainObjectName="UserOnline" />-->
+        <table tableName="video_user_reward" domainObjectName="VideoUserReward"/>
+
+
+    </context>
+
+
+    <!-- <context id="ss" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
+         <property name="beginningDelimiter" value="`"/>
+         <property name="endingDelimiter" value="`"/>
+
+         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+         &lt;!&ndash; 根据Mapper生成实体类,xml文件 &ndash;&gt;
+         &lt;!&ndash;<plugin type="OverIsMergeablePlugin" />&ndash;&gt;
+
+         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+             <property name="mappers" value="com.zf.yichat.base.FsMapper"/>
+         </plugin>
+
+
+         &lt;!&ndash; <plugin type="${mapper.plugin}">
+              <property name="autoDelimitKeywords" value="true"/> &lt;!&ndash; 给表名或字段名添加分隔符。&ndash;&gt;
+
+              <property name="mappers" value="${mapper.Mapper}"/>
+          </plugin>&ndash;&gt;
+
+         &lt;!&ndash; 注释 &ndash;&gt;
+         <commentGenerator>
+             <property name="suppressAllComments" value="true"/>&lt;!&ndash; 是否取消注释 &ndash;&gt;
+             <property name="suppressDate" value="true"/> &lt;!&ndash; 是否生成注释代时间戳&ndash;&gt;
+         </commentGenerator>
+
+
+         &lt;!&ndash; jdbc连接 &ndash;&gt;
+         <jdbcConnection driverClass="${tg_jdbc_driver}"
+                         connectionURL="${tg_jdbc_url}" userId="${tg_jdbc_user}"
+                         password="${tg_jdbc_password}"/>
+
+         &lt;!&ndash; 类型转换 &ndash;&gt;
+         <javaTypeResolver>
+             &lt;!&ndash; 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） &ndash;&gt;
+             <property name="forceBigDecimals" value="false"/>
+         </javaTypeResolver>
+
+         &lt;!&ndash; 生成实体类地址 &ndash;&gt;
+         <javaModelGenerator targetPackage="com.zf.yichat.model"
+                             targetProject="${project}">
+             &lt;!&ndash; 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] &ndash;&gt;
+             <property name="enableSubPackages" value="false"/>
+
+             <property name="constructorBased" value="true"/>
+             &lt;!&ndash; 是否针对string类型的字段在set的时候进行trim调用 &ndash;&gt;
+             <property name="trimStrings" value="true"/>
+         </javaModelGenerator>
+
+         &lt;!&ndash; 生成mapxml文件 &ndash;&gt;
+         <sqlMapGenerator targetPackage="mybatis/xml"
+                          targetProject="${xml}">
+             &lt;!&ndash; 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] &ndash;&gt;
+             <property name="enableSubPackages" value="false"/>
+         </sqlMapGenerator>
+
+         &lt;!&ndash; 生成mapxml对应client，也就是接口dao &ndash;&gt;
+         <javaClientGenerator targetPackage="com.zf.yichat.im.mapper"
+                              targetProject="${project}" type="XMLMAPPER">
+             &lt;!&ndash; 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] &ndash;&gt;
+             <property name="enableSubPackages" value="false"/>
+         </javaClientGenerator>
+
+
+         <table tableName="tig_groups" domainObjectName="TigGroup" />
+         <table tableName="tig_group_members" domainObjectName="TigGroupMember" />
+
+
+
+     </context>-->
+</generatorConfiguration>

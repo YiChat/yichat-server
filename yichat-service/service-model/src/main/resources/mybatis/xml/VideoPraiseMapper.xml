@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.VideoPraiseMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.VideoPraise">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="video_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="balance_status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <update id="batchUpdateBalanceStatus">
+        update video_praise set balance_status=1 where id =#{vpId}
+    </update>
+    <select id="limitMoney" resultType="java.lang.Boolean">
+        select sum(money) &gt;= #{limit} from user_balance_detail where
+        type=115 and user_id=#{userId} and to_days(ctime) = to_days(now());
+    </select>
+</mapper>

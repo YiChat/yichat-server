@@ -1,0 +1,105 @@
+
+server:
+  port: 8015
+  servlet:
+    context-path: /api
+  tomcat:
+      ## 最大工作线程数，默认200。（4核8g内存，线程数经验值800，操作系统做线程之间的切换调度是有系统开销的，所以不是越多越好。）
+      max-threads: 800
+      ## 最小工作空闲线程数，默认10。（适当增大一些，以便应对突然增长的访问量）
+      min-spare-threads: 100
+      ## 等待队列长度，默认100。
+      accept-count: 1000
+      ## 最大连接数
+      max-connections: 20000
+
+
+##############
+config:
+  #财务金额单位
+  unit: 元
+  #用户默认建群权限 0无 1有
+  createGroupAuth: 1
+  #手机号是否默认应用ID
+  mobileAppIdStatus: false
+  #是否支持应用ID登陆
+  supportAppIdLogin: true
+  security:
+     aesKey:
+       auth: A286D372M63HFUQW
+       token: A286D372M63HFYUS
+     decode: true
+  #推送是否启用
+  push:
+     status: false
+  #短信平台
+  sms:
+      client: aliyun
+      appId: LTAIKdVKVYciuAe0
+      appKey: nY8yEqnob4yPiUK8uxUarY1tt5pZJT
+      sign: 易聊即时通讯
+      region: cn-hangzhou
+      template: SMS_169103021
+  #红包有效小时数
+  packet:
+     effectHour: 12
+
+#数据库配置
+spring:
+  datasource:
+    jdbc-url: jdbc:mysql://localhost:3306/api?useUnicode=true&characterEncoding=utf-8&useSSL=false&noAccessToProcedureBodies=true&allowMultiQueries=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: tigase
+    password: aa12345
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 25
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 180000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+    im:
+          jdbc-url: jdbc:mysql://localhost:3306/tigase?useSSL=false&noAccessToProcedureBodies=true
+          driver-class-name: com.mysql.jdbc.Driver
+          username: tigase
+          password: aa12345
+          type: com.zaxxer.hikari.HikariDataSource
+          hikari:
+                 minimum-idle: 1
+                 maximum-pool-size: 15
+                 auto-commit: true
+                 idle-timeout: 30000
+                 pool-name: DatebookHikariCP
+                 max-lifetime: 180000
+                 connection-timeout: 30000
+                 connection-test-query: SELECT 1
+  redis:
+        database: 1
+        host: localhost
+        port: 6379
+        password: zf123!@#
+        jedis:
+          pool:
+            max-active: 9
+            max-wait: -1
+            max-idle: 5
+            min-idle: 0
+        timeout: 10000
+
+#支付配置
+pay:
+  weixin:
+     appId:
+     appKey:
+     mchId:
+     notifyUrl:
+  alipay:
+     appId:
+     privateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCPSWdI90EhCFbc14UPVDo7S2yTS6ywNZtTf+3kI3PXMz3Aqztu55FX3o2GhXeUknHz37f/EFW2RPUs/Ut75TFtt55pA22OeyqNYfGqoqTM+gNwUs6amR842TIFGqJisNcc4Cf7aaNd+v+5jH5ALyGXt3xDhRWFwQOY39tnODxQd6jbFMe5yvhbexVBgTE+x+/lw6gQNf3GMTibu24lC8sCbBAxKrJpbb8YJSjtw3MeCEGndDSap3gvU3vJN94T5B6PUBZ1bgiV2XpBU2BteKmWd08yaC0apv7Hh3j7zwzKrs0x0qkAmrWeeyRhsANWkiA3ShbePSyla93dc3hMowAjAgMBAAECggEAesmbYfLIdCcyUKO72cwC7scOrxbdUE9P4PkzAhrDbTnzBEV4c+yrJ5KG0y1SsRXh4uvnQANegAiN1dTlt7FLb0s3y6PtYXj4mRnCv8gK08C366x6cg8fq1asv6T4XPxQCuWoPZFkNugd9oKHujbpYZsSOMY2EF272GiVGtodDZJ+MLrHIyAttXuJKRXnPG07hTFK0XmV2k49S0m+4zCMiH0xSZ11sg3Xbm15BwHxrJEyC71ME58+Tv4j8f2gVXRPkdPJev29hY+6iK2TA8iKSqFLqTbWGEtQ65glTf7A0+YpoMUs7DCzCvhGwnHZlIwlLha9CiUulqSqzBDRy/TyQQKBgQDql4di9qrQVJj7d+WYqKQzNwUe68GS/OsTlZU6dt2PEX7+KGHcyIXxi4wjCxRdk/9xTWtGRplkHxaWuncFwoV7Sedpp7ESyXs8no6jMS0KRCHPw9qlI/RABpzmW4DKUzQukPWUVJ/Lx8CJZ0Gane6Gx7BFu+1VoIFH30oSzcCkwwKBgQCcXNQP2HwGiwFN2GY2SORhks13/ruYBzB1PAPG0HK15h1uQ4UIVmkxeuhGx7eOEWv6NzQDNLE4mOmfo2lKsxHhS6zJ5C6rdIqxbwDyanWmVgqxwgp0ghXXlCA72nJk7wxkdbz6VjG3k15/H6SFU9U+zBNv3U+//ck1NjLsiqMBIQKBgGhmkzv5pr8cRxDypN0xgBHC1KaUKQuvPzbyBP2F1MhM8wVNF3BYVTPP9MfLsH6M1MuptqoJ1U33f+gIh9uqXBkoJLKijG1d+VhbAAOkaPT+qUV7VhzUSWkNCFqEMmbYbIqkvIYMuyjHduovZ8TVsEePKuV94vuOeLpxpteDdc5dAoGANBmmO2Vp5hA5LgQWAq6FEpIEzp/dSAnVNqr5oyxfnIaBdfUfhaitQmRusu7nFXpunR/5v7u19WLWLXAYrGBAa+54M4lJl62sbPTMvvmEHBl9VL+QFkQmHP/pQahHB6SzX2HvxwYjaMS87uTPP/GwE02SiGqYoSNiAM3/Z9vF9qECgYEAkpm4BI9SalAkyfxeLF32g3VxQxEAErQzWZkZJa8Ug7RDSOEm193agCIlPjr6DONjtSilSbl1sWGepusmS5KUNP6E0PVcLoaqDZVPnqh/P5m5zSNu6igrQjHAOG4Aw+239/PHACuGHRLPO+hWPfzcP6XdsWgtC4fzDPCI38Q9+WU=
+     publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8tQSlx05+mPo5+Pit14zIdNGAHQPMfUdw5PV/5UqCexL39MPQfkfg488i5sEpj9iippjGn5DWxAUnzd7y2xL9fkDt3dWxNXZtn/hgJCna8p+kUIdm44FDomAOXmI2ujka8ixcPnnp2GNA16XAmJtx8IoAC34NSzTzUvvZGz7Mu9A1m8hmboeXNk4Ia61w1m/kRssQNFDSOVj3xPsjxs0rU3gtLj3Q9udBTHdDxAdFKkPUTcdTtQjS7bmvT6rz1eGLSbutgZL8Xm3MYCR22lRndR4ZKt0Urs2bEBr7ghkKIiQDnRJ6rKZyYSQPdRG+9Ej3ipBIM26bylMGOA7tyqeDwIDAQAB
+     appPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj0lnSPdBIQhW3NeFD1Q6O0tsk0ussDWbU3/t5CNz1zM9wKs7bueRV96NhoV3lJJx89+3/xBVtkT1LP1Le+UxbbeeaQNtjnsqjWHxqqKkzPoDcFLOmpkfONkyBRqiYrDXHOAn+2mjXfr/uYx+QC8hl7d8Q4UVhcEDmN/bZzg8UHeo2xTHucr4W3sVQYExPsfv5cOoEDX9xjE4m7tuJQvLAmwQMSqyaW2/GCUo7cNzHghBp3Q0mqd4L1N7yTfeE+Qej1AWdW4Ildl6QVNgbXiplndPMmgtGqb+x4d4+88Myq7NMdKpAJq1nnskYbADVpIgN0oW3j0spWvd3XN4TKMAIwIDAQAB
+     notifyUrl: http://47.106.64.136:8015/api/pay/alipay/notify
+     redirectUrl: http://47.111.129.48:8015/api/pay/alipay/notify

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.VideoCommentMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.VideoComment">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="video_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="src_comment_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="comment_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="comment_user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="praise_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="reply_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="balance_status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <update id="incrementPraiseCount">
+       update video_comment set praise_count=praise_count+1 where id=#{commentId}
+    </update>
+
+    <update id="incrementReplyCount">
+      update video_comment set reply_count=reply_count+1 where id=#{commentId}
+    </update>
+    <update id="reductPraiseCount">
+      update video_comment set praise_count=praise_count-1 where id=#{commentId}
+    </update>
+    <select id="limitMoney" resultType="java.lang.Boolean">
+     select sum(money) &gt;= #{limit}  from user_balance_detail where
+        type=111 and user_id=#{userId} and  to_days(ctime) = to_days(now());
+  </select>
+
+    <update id="updateBalanceStatus">
+    update video_comment set balance_status=1 where id =#{commentId}
+  </update>
+    <update id="updateReplyStatus">
+    update video_comment set status=1 where src_comment_id =#{srcId}
+  </update>
+</mapper>

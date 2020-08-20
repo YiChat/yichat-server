@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.PacketReceiveMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.PacketReceive">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="packet_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="money" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <select id="selectList" resultType="com.zf.yichat.dto.PacketReceiveDto">
+        SELECT u.id as userId,u.nick ,pr.money,date_format(pr.ctime,'%Y-%m-%d %H:%i:%s') as receiveTime,0 as
+        maxStatus,u.avatar FROM packet_receive pr LEFT JOIN `user` u ON pr.user_id=u.id
+        WHERE pr.packet_id=#{packetId} and pr.status=1 order by pr.id desc
+    </select>
+</mapper>

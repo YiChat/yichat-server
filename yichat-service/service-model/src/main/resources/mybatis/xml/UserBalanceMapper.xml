@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.UserBalanceMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.UserBalance">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="balance" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="income_balance" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="freeze_balance" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <update id="updateBalance">
+        UPDATE user_balance SET
+        balance=balance+#{money},income_balance=income_balance+#{incomeMoney},freeze_balance=freeze_balance+#{freezeMoney}
+        where user_id=#{userId} and income_balance+#{incomeMoney}&gt;=0
+    </update>
+</mapper>

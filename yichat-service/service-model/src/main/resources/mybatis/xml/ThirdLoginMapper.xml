@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.ThirdLoginMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.ThirdLogin">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="unique_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="union_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="userId" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+</mapper>

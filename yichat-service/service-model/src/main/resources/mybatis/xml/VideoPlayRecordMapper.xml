@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.VideoPlayRecordMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.VideoPlayRecord">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="video_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="balance_status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <update id="updateBalanceStatus">
+        update video_play_record set balance_status=1 where id =#{recordId}
+
+    </update>
+    <select id="limitMoney" resultType="java.lang.Boolean">
+        select sum(money) >= #{limitMoney} from user_balance_detail where
+        type=110 and user_id=#{userId} and to_days(ctime) = to_days(now());
+    </select>
+
+    <select id="selectByVideoId" resultMap="BaseResultMap">
+        select * from video_play_record where user_id=#{userId} and video_id=#{videoId}
+    </select>
+</mapper>

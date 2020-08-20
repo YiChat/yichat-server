@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zf.yichat.mapper.FriendMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.Friend">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="friend_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="view_status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="user_mark" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="friend_mark" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="ctime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="utime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <insert id="insertOrUpdate">
+        insert into friend(user_id,friend_id)VALUES (#{userId},#{friendId}) ON DUPLICATE KEY UPDATE status=0,utime=now()
+    </insert>
+    <select id="selectOneFriend" resultMap="BaseResultMap">
+        select f.* from friend f where f.status=0
+        AND ((f.user_id=#{userId} and f.friend_id=#{friendId}) or (f.user_id=#{friendId} and f.friend_id=#{userId}))
+    </select>
+    <select id="selectOneExistFriend" resultMap="BaseResultMap">
+        select f.* from friend f where ((f.user_id=#{userId} and f.friend_id=#{friendId}) or (f.user_id=#{friendId} and
+        f.friend_id=#{userId}))
+    </select>
+    <select id="selectFriendList" resultMap="com.zf.yichat.mapper.UserMapper.BaseResultMapStg">
+        SELECT u.*,a.user_mark as remark,a.ctime as `time` from friend a
+        LEFT JOIN user u on a.friend_id=u.id where a.user_id=#{userId} and a.`status`=0 and u.`status`=0
+        UNION ALL
+        SELECT u.*,a.friend_mark as remark,a.ctime as `time` from friend a
+        LEFT JOIN user u on a.user_id=u.id
+        where a.friend_id=#{userId} and a.`status`=0 and u.`status`=0
+    </select>
+</mapper>

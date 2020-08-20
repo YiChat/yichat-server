@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zf.yichat.im.mapper.TigGroupMemberMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.TigGroupMember">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="gid" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="uid" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="timestamp" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT tg.* from tig_group_members tg LEFT JOIN tig_groups g on tg.gid=g.gid
+        where tg.gid=#{gid}
+        ORDER BY if(g.creator=tg.uid,1,0) DESC,tg.`timestamp` asc
+    </select>
+</mapper>

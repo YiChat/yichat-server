@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zf.yichat.mapper.TrendMapper">
+    <resultMap id="BaseResultMap" type="com.zf.yichat.model.Trend">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <constructor>
+            <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="imgs" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="videos" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="location" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="comment_count" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="praise_count" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="ctime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="utime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+
+    <update id="updatePraiseCount">
+        update trend SET praise_count=praise_count+#{count} where id=#{trendId}
+    </update>
+    <update id="updateCommentCount">
+        update trend SET comment_count=comment_count+#{count} where id=#{trendId}
+    </update>
+    <select id="selectFriendList" resultMap="BaseResultMap">
+        SELECT t.* from trend t LEFT JOIN
+        (SELECT user_id,friend_id from friend where (user_id=#{userId} or friend_id=#{userId}) and `status`=0 ) a
+        on t.user_id=IF(a.user_id=#{userId},a.friend_id,a.user_id) where t.status = 0 and
+        (a.user_id is not null or t.user_id=#{userId}) order by t.id desc
+
+
+    </select>
+</mapper>
