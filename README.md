@@ -1,2 +1,2 @@
 # yichat-server
-短视频项目接口源码
+yichat接口源码
