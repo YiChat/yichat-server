@@ -24,6 +24,7 @@ yichat接口源码
  `flush privileges;`<br/>
  创建tigase数据库 <br/>
  `create database tigase;`
-  导入数据sql
+  导入数据sql,文件在项目config文件夹中 <br/>
+  https://github.com/YiChat/yichat-server/blob/master/api/src/main/resources/config/tigase.sql
  
 ### 安装接口服务
